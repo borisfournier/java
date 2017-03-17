@@ -52,7 +52,7 @@ public class Moderateur extends Utilisateur implements Salarie{
  * parcours le tableau de messages et modifie le message de l'utilisateur u passé en paramètre
      * @param u un utilisateur choisit
  */    
-    public void modifierMessage(Utilisateur u) {
+    public void modifierMessage(Personne u) {
         u.afficherMessages();
         System.out.println("\nEntrer le numéro du message que vous souhaitez modifier: \n");
         int i = sc.nextInt();
@@ -68,7 +68,7 @@ public class Moderateur extends Utilisateur implements Salarie{
  * parcours le tableau de messages et supprime le message m passé en paramètre
      * @param u récupérer un utilisateur pour pouvoir supprimer ses messages
  */    
-    public void supprimerMessages(Utilisateur u) {
+    public void supprimerMessages(Personne u) {
         u.afficherMessages();
         u.supprimerMessage();
     }

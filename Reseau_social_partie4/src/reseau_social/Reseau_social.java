@@ -23,8 +23,6 @@ public class Reseau_social {
     public static void main(String[] args) {
         System.out.println("Bonjour et bienvenue sur cette application.\n");
         Menu menu = new Menu();
-        int type = menu.typeUtilisateur();
-        Personne u = menu.creerUtilisateur(type);
-        menu.menu(u);
+        menu.menuPrincipal();
     }
 }

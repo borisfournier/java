@@ -12,52 +12,77 @@ import java.util.*;
  * @author boris.fournier
  */
 public class Menu {
-    private final ArrayList<Utilisateur> mesUtilisateurs = new ArrayList<>();
-    private final ArrayList<Directeur> directeurs = new ArrayList<>();
+    //private ArrayList<Personne> mesUtilisateurs = new ArrayList<>();
 
     static Scanner scan = new Scanner(System.in);
-    
+    ArrayList<Personne> users = ListeUtilisateurs.getMesUtilisateurs();
+
     public Menu(){  
     }
 
-    public void checkUtilisateur(){
-        if(!mesUtilisateurs.isEmpty()){
-            System.out.println("Il y a au moins un utilisateur enregistré, souhaitez-vous consulter la liste? (O/N)");
-            char reponse=scan.nextLine().charAt(0);
-            if(reponse == 'O'){
-                System.out.println("Voulez-vous vous connecter en tant qu'utilisateur de cette liste? (O/N)");
-                char reponse1=scan.nextLine().charAt(0);
-                if(reponse1=='O'){
-                    Utilisateur choixU = choisirUtilisateur();
-                    menu(choixU);
-                }else{
-                    System.out.println("Retour au menu principal!!!");
+    public void menuPrincipal(){
+        int choix;
+        char reponse = 'N';
+        while(reponse!='O'){
+            System.out.println("Se connecter: 1 \n"
+                    + "Inscription: 2 \n"
+                    + "Liste des personnes: 3 \n"
+                    + "Quitter l'application: 4 \n");
+            try{
+                choix=scan.nextInt();
+                } catch(Exception e) {
+                    choix = 100;
                 }
+            scan.nextLine();
+
+            switch(choix){
+                case 1:
+                    System.out.println(users);
+                    if(users.isEmpty()){
+                        char encore;
+                        do{
+                            System.out.println("Veuillez saisir votre prenom: \n");
+                            String prenom = scan.nextLine();
+                            System.out.println("Veuillez saisir votre nom: \n");
+                            String nom=scan.nextLine();
+                            for(int i=0; i<users.size(); i++){
+                                if((users.get(i).getNom().equals(nom)) && (users.get(i).getPrenom().equals(prenom))){
+                                    menu(users.get(i));
+                                }else{
+                                    System.out.println("Personne inexistante!!\n");
+                                }
+                            }
+                            System.out.println("Voulez-vous retenter? (O/N)");
+                            encore = scan.nextLine().charAt(0);
+                        }while(encore=='O');
+
+                    }else{
+                        System.out.println("Aucune personne enregistrée!!\n");
+                        menuPrincipal();
+                    }
+                break;
+                case 2:
+                    int type = typeUtilisateur();
+                    Personne p = creerUtilisateur(type);
+                    menu(p);
+                break;
+                case 3:
+                    if(!users.isEmpty()){
+                        ListeUtilisateurs.afficherPersonnes();
+                    }else{
+                        System.out.println("Il n'y a aucune personne enregistrée.\n");
+                    }
+                break;
+                case 4:
+                    System.out.println("Etes-vous sur de vouloir quitter cette fantastique application? (O/N)");
+                    reponse = scan.nextLine().charAt(0);
+                    break;
+                default: 
+                        System.out.print("Veuillez entrer un choix conforme au menu.\n");
             }
-        }else{
-            System.out.println("Il n'y a aucun utilisateur enregistré.");
         }
     }
     
-    public void checkDirecteur(){
-         if(!directeurs.isEmpty()){
-            System.out.println("Il y au moins un directeur existant, souhaitez-vous consulter la liste? (O/N)");
-            char reponse=scan.nextLine().charAt(0);
-            if(reponse == 'O'){
-                System.out.println("Voulez-vous vous connecter en tant que Directeur existant dans cette liste? (O/N)");
-                char reponse1=scan.nextLine().charAt(0);
-                if(reponse1=='O'){
-                    Directeur choixD = choisirDirecteur();
-                    menu(choixD); 
-                }else{
-                    System.out.println("Retour au menu principal!!!");
-                }
-            }
-        }else{
-            System.out.println("Il n'y aucun directeur existant.");
-        }
-    }
-
     public int typeUtilisateur(){
         boolean entier = true;
         int t=0;
@@ -73,7 +98,7 @@ public class Menu {
                 scan.nextLine();
                 entier = false;
             }catch(Exception e) {
-                    System.out.println("Veuillez saisir une valeur correspondant au menu.");
+                    System.out.println("Veuillez saisir une valeur correspondant au menu.\n");
                     scan.nextLine();
             }
         }
@@ -126,6 +151,7 @@ public class Menu {
                 }
             }
             Personne m1 = new Moderateur(nom, prenom, age, sexe, type,salaire);
+            users.add(m1);
             System.out.println("\nModérateur de niveau 1 enregistré avec succès\n");
             return m1;
         }else if(type==2){
@@ -141,6 +167,7 @@ public class Menu {
                 }
             }
             Personne m2 = new Moderateur(nom, prenom, age, sexe, type, salaire);
+            users.add(m2);
             System.out.println("\nModérateur de niveau 2 enregistré avec succès\n");
             return m2;
         }else if(type==3){
@@ -156,60 +183,18 @@ public class Menu {
                 }
             }
             String poste = "Directeur";
-            Directeur dir = new Directeur(nom, prenom, age, sexe, poste, salaire);
-            directeurs.add(dir);
+            Personne dir = new Directeur(nom, prenom, age, sexe, poste, salaire);
+            users.add(dir);
             System.out.println("\nDirecteur créé avec succès\n");
             return dir;
         }else{
             System.out.println("Choisissez-vous un pseudo: ");
             String pseudo = scan.nextLine();
-            Utilisateur u = new Utilisateur(nom, prenom, age, sexe, pseudo);
-            mesUtilisateurs.add(u);
+            Personne u = new Utilisateur(nom, prenom, age, sexe, pseudo);
+            users.add(u);
             System.out.println("\nUtilisateur enregistré avec succès\n");
             return u;
         }
-    }
-
-
-/**
- * Permet de choisir un utilisateur parmi la liste des utilisateurs existants
- * @return un objet utilisateur choisi
- */    
-    public Utilisateur choisirUtilisateur() {
-        System.out.println("Liste des utilisateurs existants: ");
-        for(int i = 0; i<mesUtilisateurs.size(); i++){
-            System.out.println("Utilisateur numéro " + i +" : " + mesUtilisateurs.get(i).getPrenom()+ " " + mesUtilisateurs.get(i).getNom());
-        }
-        System.out.println("\nChoisissez un numéro d'utilisateur: ");
-        int numéro = scan.nextInt();
-        scan.nextLine();
-        Utilisateur u = mesUtilisateurs.get(numéro);
-        return u;
-    }
-    
-/**
- * Permet de choisir un directeur parmi la liste des directeurs existants
- * @return un objet directeur choisi
- */    
-    public Directeur choisirDirecteur() {
-        System.out.println("Liste des directeurs existants: ");
-        for(int i = 0; i<directeurs.size(); i++){
-            System.out.println("Directeur numéro " + i +" : " + directeurs.get(i).getPrenom()+ " " + directeurs.get(i).getNom());
-        }
-        System.out.println("\nChoisissez un numéro de directeur: ");
-        int numéro1 = scan.nextInt();
-        scan.nextLine();
-        Directeur d = directeurs.get(numéro1);
-        return d;
-    }
-    
-/**
- * Permet de choisir un utilisateur parmi la liste des utilisateurs existants
- */    
-    public void supprimerUtilisateur() {
-        
-        Utilisateur u = choisirUtilisateur();
-        mesUtilisateurs.remove(u);
     }
     
     
@@ -233,46 +218,46 @@ public class Menu {
    
     public void menu(Personne u){
         int choix;
-        char reponse = 'N';
+        boolean reponse = true;
         
-        while(reponse == 'N') { 
+        while(reponse) { 
             System.out.print("Choisissez parmi les options suivantes: \n"
                     + "1: Afficher votre profil\n"
-                    + "2: Modifier votre profil\n"
-                    + "3: Ecrire un message\n"
+                    + "2: Modifier votre profil\n");
+            if("reseau_social.Utilisateur".equals(u.getClass().getName())){
+                System.out.print("3: Ecrire un message\n"
                     + "4: Afficher tous vos messages\n"
                     + "5: Afficher un seul message\n"
-                    + "6: supprimer un message\n");
-            if("reseau_social.Utilisateur".equals(u.getClass().getName())){
-                System.out.print("7: Ajouter un ami\n"
+                    + "6: supprimer un message\n"
+                    + "7: Ajouter un ami\n"
                     + "8: Afficher tous mes amis\n"
-                    + "9: Afficher le nom d'un ami\n"
-                    +"20: Retour au menu principal\n"
-                    + "30: Quitter l'application\n");
+                    + "9: Afficher le nom d'un ami\n");
             } else if ("reseau_social.Moderateur".equals(u.getClass().getName()) && ((Moderateur)u).getDroit()==1){
-                System.out.print("7: Ajouter un ami\n"
+                System.out.print("3: Ecrire un message\n"
+                    + "4: Afficher tous vos messages\n"
+                    + "5: Afficher un seul message\n"
+                    + "6: supprimer un message\n"
+                    + "7: Ajouter un ami\n"
                     + "8: Afficher tous mes amis\n"
                     + "9: Afficher le nom d'un ami\n"
-                    + "11: Modifier les messages des utilisateurs\n"
-                    + "12: Supprimer les messages des utilisateurs\n"
-                    + "20: Retour au menu principal\n"
-                    + "30: Quitter l'application\n");
+                    + "10: Modifier les messages des utilisateurs\n"
+                    + "11: Supprimer les messages des utilisateurs\n");
             }else if ("reseau_social.Moderateur".equals(u.getClass().getName()) && ((Moderateur)u).getDroit()==2){
-                System.out.print("7: Ajouter un ami\n"
+                System.out.print("3: Ecrire un message\n"
+                    + "4: Afficher tous vos messages\n"
+                    + "5: Afficher un seul message\n"
+                    + "6: supprimer un message\n"
+                    + "7: Ajouter un ami\n"
                     + "8: Afficher tous mes amis\n"
                     + "9: Afficher le nom d'un ami\n"
-                    + "11: Modifier les messages des utilisateurs\n"
-                    + "12: Supprimer les messages des utilisateurs\n"
-                    + "13: Supprimer un utilisateur\n"
-                    + "20: Retour au menu principal\n"
-                    + "30: Quitter l'application\n");
+                    + "10: Modifier les messages des utilisateurs\n"
+                    + "11: Supprimer les messages des utilisateurs\n"
+                    + "13: Supprimer un utilisateur\n");
             }else{
                 System.out.print("7: Ajouter un employe\n"
                     + "8: Afficher tous mes employés\n"
-                    + "9: Afficher le nom d'un employé\n"
-                    + "20: Retour au menu principal\n"
-                    + "30: Quitter l'application\n");
-            }
+                    + "9: Afficher le nom d'un employé\n");
+            }System.out.print("20: Deconnexion\n");
             try{
                 choix = scan.nextInt();
                 } catch(Exception e) {
@@ -293,17 +278,25 @@ public class Menu {
                     u.modifierProfil();
                     break;
                 case 3:
-                    u.ajouterMessage(u.getNom());
+                    if(!"reseau_social.Directeur".equals(u.getClass().getName())){
+                        u.ajouterMessage(u.getNom());
+                    }
                     break;
                 case 4:
-                    u.afficherMessages();
+                    if(!"reseau_social.Directeur".equals(u.getClass().getName())){
+                        u.afficherMessages();
+                    }
                     break;
                 case 5:
-                    u.afficherUnMessage();
+                    if(!"reseau_social.Directeur".equals(u.getClass().getName())){
+                        u.afficherUnMessage();
+                    }
                     break;
                 case 6:
-                    u.afficherMessages();
-                    u.supprimerMessage();
+                    if(!"reseau_social.Directeur".equals(u.getClass().getName())){
+                        u.afficherMessages();
+                        u.supprimerMessage();
+                    }
                     break;
                 case 7:
                     if("Directeur".equals(u.getClass().getSimpleName())){
@@ -326,43 +319,36 @@ public class Menu {
                         ((Utilisateur)u).afficherUnePersonne();
                     }
                     break;
-                /*case 10:
-                    Utilisateur u1 =choisirUtilisateur();
-                    menu(u1);
-                    break;*/
-                case 11:
+                case 10:
                     if("reseau_social.Moderateur".equals(u.getClass().getName()) && ((Moderateur)u).getDroit()==1){
-                        Utilisateur message_u = choisirUtilisateur();
+                        Personne message_u = ListeUtilisateurs.choisirUtilisateur();
                         ((Moderateur)u).modifierMessage(message_u);    
                     }else{
                         System.out.println("Vous n'avez pas le droit de modifier un message d'utilisateur, petit malin!!!");
                     }
                     break;
-                case 12:
+                case 11:
                     if("reseau_social.Moderateur".equals(u.getClass().getName()) && ((Moderateur)u).getDroit()==1){
-                        Utilisateur supprimer_mess = choisirUtilisateur();
+                        Personne supprimer_mess = ListeUtilisateurs.choisirUtilisateur();
                     ((Moderateur)u).supprimerMessages(supprimer_mess);
                     }else{
                         System.out.println("Vous n'avez pas le droit de supprimer un message d'utilisateur, petit malin!!!");
                     }
                     break;
-                case 13:
+                case 12:
                     if( "reseau_social.Moderateur".equals(u.getClass().getName())&& ((Moderateur)u).getDroit()==2){
-                        supprimerUtilisateur();
+                        ListeUtilisateurs.supprimerUtilisateur();
                     }else{
                         System.out.println("Vous n'avez pas le droit de supprimer un utilisateur, petit malin!!!");
                     }
                     break;
                 case 20:
-                    checkDirecteur();
-                    checkUtilisateur();
-                    int t=typeUtilisateur();
+                    reponse = false;
+                    System.out.println("Vous avez bien été déconnecté.");
+                    menuPrincipal();
+                    /*int t=typeUtilisateur();
                     Personne u2 = creerUtilisateur(t);
-                    menu(u2);
-                    break;
-                case 30:
-                    System.out.println("Etes-vous sur de vouloir quitter cette fantastique application? (O/N)");
-                    reponse = scan.nextLine().charAt(0);
+                    menu(u2);*/
                     break;
                 default: 
                     System.out.print("Veuillez entrer un choix conforme au menu"); 

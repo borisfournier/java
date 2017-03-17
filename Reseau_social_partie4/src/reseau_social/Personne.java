@@ -89,15 +89,14 @@ public abstract class Personne {
 
 /**
  * 
-     * @param exp nom de l'expediteur de message
+     * @param exp expediteur du message
  */     
     protected void ajouterMessage(String exp) {
         System.out.println("Contenu de votre message: ");
         String contenu = scan.nextLine();
         System.out.println("Destinataire de votre message: ");
         String destinataire = scan.nextLine();
-        String expediteur = exp;
-        Message m = new Message(contenu, expediteur, destinataire);
+        Message m = new Message(contenu, exp, destinataire);
         messages.add(m);
     }
 
