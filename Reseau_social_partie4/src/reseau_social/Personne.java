@@ -19,6 +19,7 @@ public abstract class Personne {
     protected int age;
     protected String sexe;
     protected ArrayList<Message> messages = new ArrayList<>();
+    protected ArrayList<Message> historique = new ArrayList<>();
 
     //méthodes
     public String getNom() {
@@ -90,14 +91,18 @@ public abstract class Personne {
 /**
  * 
      * @param exp expediteur du message
+     * @param dest destinataire du message
  */     
-    protected void ajouterMessage(String exp) {
+    protected void ajouterMessage(String exp, String dest) {
         System.out.println("Contenu de votre message: ");
         String contenu = scan.nextLine();
-        System.out.println("Destinataire de votre message: ");
-        String destinataire = scan.nextLine();
-        Message m = new Message(contenu, exp, destinataire);
+        Message m = new Message(contenu, exp, dest);
+        Message m1 = new Message(contenu, dest, exp);
+        Personne destinataire = ListeUtilisateurs.destinataireMessage(m);
+        destinataire.messages.add(m1);
         messages.add(m);
+        historique.add(m);
+        historique.add(m1);
     }
 
 /**
@@ -125,7 +130,59 @@ public abstract class Personne {
             }
         } 
     }
+    
+/**
+ * affiche tous les messages d'un utilisateur
+ * parcours le tableau de messages et les affiche tous
+ */    
+    protected void afficherMessagesRecus() {
+        if(messages.isEmpty()) {
+            System.out.println("\nVous n'avez aucun message!!!\n");
+        }else{
+            for(Message m: messages ) {
+                if(this.prenom.equals(m.getDestinataire())){
+                    System.out.println("\nExpéditeur: " + m.getExpediteur() + "     Contenu du message: " + m.getMessage()+ "\n"); 
+                }
+            }
+        } 
+    }
+    
+/**
+ * affiche tous les messages d'un utilisateur
+ * parcours le tableau de messages et les affiche tous
+ */    
+    protected void afficherMessagesEnvoyes() {
+        if(messages.isEmpty()) {
+            System.out.println("\nVous n'avez aucun message!!!\n");
+        }else{
+            for(Message m: messages ) {
+                if(this.prenom.equals(m.getExpediteur())){
+                    System.out.println("\n Destinataire: " + m.getDestinataire() + "     Contenu du message: " + m.getMessage()+ "\n"); 
+                }
+            }
+        }
+    }
 
+    /**
+ * affiche tous les messages d'un utilisateur
+ * parcours le tableau de messages et les affiche tous
+ */    
+    protected void supprimerHistorique() {
+        if(historique.isEmpty()) {
+            System.out.println("\nAucun messages dans l'historique\n");
+        }else{
+            for(int i = 0; i < historique.size(); i++ ) {
+                System.out.println("Contenu de l'historique : \n");
+                System.out.println("\nMessage numéro : " + i + "Destinataire: " + historique.get(i).getDestinataire() + "Expéditeur: " + historique.get(i).getExpediteur() + "     Contenu du message: " + historique.get(i).getMessage()+ "\n"); 
+            }
+        System.out.println("\nEntrer le numéro du message que vous souhaitez supprimer: \n");
+        int message = scan.nextInt();
+        scan.nextLine();
+        historique.remove(message);
+        System.out.println("\nLe message a bien été supprimé.\n");
+        }
+    }
+    
 /**
  * supprime un message d'un utilisateur
  * parcours le tableau de messages et supprime le message m passé en paramètre

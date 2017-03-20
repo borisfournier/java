@@ -37,16 +37,17 @@ public class Menu {
 
             switch(choix){
                 case 1:
-                    System.out.println(users);
-                    if(users.isEmpty()){
+                    if(!users.isEmpty()){
                         char encore;
                         do{
+                            ListeUtilisateurs.afficherListPersonnes();
                             System.out.println("Veuillez saisir votre prenom: \n");
                             String prenom = scan.nextLine();
                             System.out.println("Veuillez saisir votre nom: \n");
                             String nom=scan.nextLine();
                             for(int i=0; i<users.size(); i++){
                                 if((users.get(i).getNom().equals(nom)) && (users.get(i).getPrenom().equals(prenom))){
+                                    System.out.println("Bienvenue " + users.get(i).getNom()+ " " + users.get(i).getPrenom()+ ". Vous êtes bien connecté.");
                                     menu(users.get(i));
                                 }else{
                                     System.out.println("Personne inexistante!!\n");
@@ -68,7 +69,7 @@ public class Menu {
                 break;
                 case 3:
                     if(!users.isEmpty()){
-                        ListeUtilisateurs.afficherPersonnes();
+                        ListeUtilisateurs.afficherListPersonnes();
                     }else{
                         System.out.println("Il n'y a aucune personne enregistrée.\n");
                     }
@@ -192,7 +193,7 @@ public class Menu {
             String pseudo = scan.nextLine();
             Personne u = new Utilisateur(nom, prenom, age, sexe, pseudo);
             users.add(u);
-            System.out.println("\nUtilisateur enregistré avec succès\n");
+            System.out.println("\nUtilisateur enregistré avec succès, vous êtes connecté.\n");
             return u;
         }
     }
@@ -226,12 +227,14 @@ public class Menu {
                     + "2: Modifier votre profil\n");
             if("reseau_social.Utilisateur".equals(u.getClass().getName())){
                 System.out.print("3: Ecrire un message\n"
-                    + "4: Afficher tous vos messages\n"
-                    + "5: Afficher un seul message\n"
+                    + "4: Afficher tous les messages envoyés\n"
+                    + "5: Afficher tous les messages reçus\n"
                     + "6: supprimer un message\n"
                     + "7: Ajouter un ami\n"
                     + "8: Afficher tous mes amis\n"
-                    + "9: Afficher le nom d'un ami\n");
+                    + "9: Supprimer un ami\n"
+                    + "10: Rechercher un ami\n"
+                    + "11: Rechercher un utilisateur\n");
             } else if ("reseau_social.Moderateur".equals(u.getClass().getName()) && ((Moderateur)u).getDroit()==1){
                 System.out.print("3: Ecrire un message\n"
                     + "4: Afficher tous vos messages\n"
@@ -239,9 +242,10 @@ public class Menu {
                     + "6: supprimer un message\n"
                     + "7: Ajouter un ami\n"
                     + "8: Afficher tous mes amis\n"
-                    + "9: Afficher le nom d'un ami\n"
-                    + "10: Modifier les messages des utilisateurs\n"
-                    + "11: Supprimer les messages des utilisateurs\n");
+                    + "9: Supprimer un ami\n"
+                    + "10: Rechercher un ami\n"
+                    + "11: Rechercher un utilisateur\n"
+                    + "12: Supprimer les messages des utilisateurs\n");
             }else if ("reseau_social.Moderateur".equals(u.getClass().getName()) && ((Moderateur)u).getDroit()==2){
                 System.out.print("3: Ecrire un message\n"
                     + "4: Afficher tous vos messages\n"
@@ -249,9 +253,10 @@ public class Menu {
                     + "6: supprimer un message\n"
                     + "7: Ajouter un ami\n"
                     + "8: Afficher tous mes amis\n"
-                    + "9: Afficher le nom d'un ami\n"
-                    + "10: Modifier les messages des utilisateurs\n"
-                    + "11: Supprimer les messages des utilisateurs\n"
+                    + "9: Supprimer un ami\n"
+                    + "10: Rechercher un ami\n"
+                    + "11: Rechercher un utilisateur\n"
+                    + "12: Supprimer les messages des utilisateurs\n"
                     + "13: Supprimer un utilisateur\n");
             }else{
                 System.out.print("7: Ajouter un employe\n"
@@ -279,17 +284,20 @@ public class Menu {
                     break;
                 case 3:
                     if(!"reseau_social.Directeur".equals(u.getClass().getName())){
-                        u.ajouterMessage(u.getNom());
+                        String dest = ((Utilisateur)u).choixDestinataire();
+                        if (!"empty".equals(dest)){
+                            u.ajouterMessage(u.getPrenom(),dest);
+                        }
                     }
                     break;
                 case 4:
                     if(!"reseau_social.Directeur".equals(u.getClass().getName())){
-                        u.afficherMessages();
+                        u.afficherMessagesEnvoyes();
                     }
                     break;
                 case 5:
                     if(!"reseau_social.Directeur".equals(u.getClass().getName())){
-                        u.afficherUnMessage();
+                        u.afficherMessagesRecus();
                     }
                     break;
                 case 6:
@@ -302,7 +310,9 @@ public class Menu {
                     if("Directeur".equals(u.getClass().getSimpleName())){
                         ((Directeur)u).ajouterPersonne();
                     }else{
-                        ((Utilisateur)u).ajouterPersonne();
+                        boolean b = ListeUtilisateurs.afficherAmisPossible(u);
+                        Personne dest = ListeUtilisateurs.choisirUtilisateur(b);
+                        ((Utilisateur)u).ajouterPersonne(dest,u);
                     }
                     break;
                 case 8:
@@ -310,34 +320,38 @@ public class Menu {
                         ((Directeur)u).afficherPersonnes();
                     }else{
                         ((Utilisateur)u).afficherPersonnes();
+                        //ListeUtilisateurs.afficherMesAmis(u);
                     }
                     break;
-                 case 9:
+                case 9:
                     if("Directeur".equals(u.getClass().getSimpleName())){
                         ((Directeur)u).afficherUnePersonne();
                     }else{
-                        ((Utilisateur)u).afficherUnePersonne();
+                        ((Utilisateur)u).afficherPersonnes();
+                        ((Utilisateur)u).supprimerPersonne();
                     }
                     break;
                 case 10:
-                    if("reseau_social.Moderateur".equals(u.getClass().getName()) && ((Moderateur)u).getDroit()==1){
-                        Personne message_u = ListeUtilisateurs.choisirUtilisateur();
-                        ((Moderateur)u).modifierMessage(message_u);    
-                    }else{
-                        System.out.println("Vous n'avez pas le droit de modifier un message d'utilisateur, petit malin!!!");
+                    if(!"Directeur".equals(u.getClass().getSimpleName())){
+                        ((Utilisateur)u).afficherUnePersonne();
                     }
                     break;
                 case 11:
-                    if("reseau_social.Moderateur".equals(u.getClass().getName()) && ((Moderateur)u).getDroit()==1){
-                        Personne supprimer_mess = ListeUtilisateurs.choisirUtilisateur();
-                    ((Moderateur)u).supprimerMessages(supprimer_mess);
+                    if(!"Directeur".equals(u.getClass().getSimpleName())){
+                        ListeUtilisateurs.rechercherPersonnes();
+                    }
+                    break;
+                case 12:
+                    if("reseau_social.Moderateur".equals(u.getClass().getName())){
+                        u.supprimerHistorique();
                     }else{
                         System.out.println("Vous n'avez pas le droit de supprimer un message d'utilisateur, petit malin!!!");
                     }
                     break;
-                case 12:
+                case 13:
                     if( "reseau_social.Moderateur".equals(u.getClass().getName())&& ((Moderateur)u).getDroit()==2){
-                        ListeUtilisateurs.supprimerUtilisateur();
+                        boolean b1 = ListeUtilisateurs.afficherAmisPossible(u);
+                        ListeUtilisateurs.supprimerUtilisateur(b1);
                     }else{
                         System.out.println("Vous n'avez pas le droit de supprimer un utilisateur, petit malin!!!");
                     }

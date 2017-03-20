@@ -56,9 +56,21 @@ public class Utilisateur extends Personne implements Relation{
     public void setPseudo(String pseudo) {
         this.pseudo = pseudo;
     }
-
     
 /**
+ * Permet à l'utilisateur actuel de se créer un ami 
+ * Instancie un objet a de la classe Ami et l'ajoute au tableau des amis
+     * @param dest la personne que l'on veut ajouter comme ami
+     * @param exp la personne qui fait la demande d'ami
+ * @see Ami 
+ * @see Ami#setAmi(java.lang.String) 
+ */  
+    public void ajouterPersonne(Personne dest, Personne exp) {
+        ((Utilisateur)dest).amis.add(exp);
+        amis.add(dest);
+    }
+
+    /**
  * Permet à l'utilisateur actuel de se créer un ami 
  * Instancie un objet a de la classe Ami et l'ajoute au tableau des amis
  * @see Ami 
@@ -66,10 +78,8 @@ public class Utilisateur extends Personne implements Relation{
  */  
     @Override
     public void ajouterPersonne() {
-        Personne u = ListeUtilisateurs.choisirUtilisateur();
-        amis.add(u);
+       
     }
-
 /**
  * Permet d'afficher un ami choisit par l'utilisateur
  */
@@ -78,11 +88,15 @@ public class Utilisateur extends Personne implements Relation{
         if(amis.isEmpty()) {
             System.out.println("Vous n'avez aucun ami!!!\n");
         }else{
-            afficherPersonnes();
-            System.out.print("Choisissez un numéro d'ami à afficher: \n");
-            int i = scan.nextInt();
-            scan.nextLine();
-            System.out.println("Ami numéro "+ i +" : " + amis.get(i).getPrenom()+ "  " + amis.get(i).getNom() +"\n"); 
+            System.out.print("Entrez le prénom de l'ami recherché: \n");
+            String n = scan.nextLine();
+            for(Personne ami: amis){
+                if(n.equals(ami.getPrenom())){
+                    System.out.println("Profil de votre ami: "+ ami.getPrenom()+ "  " + ami.getNom()+ " " + ami.getAge() +" ans. \n");
+                }else{
+                    System.out.println("Aucun ami correspondant");
+                }
+            } 
         }
     }
 
@@ -99,7 +113,55 @@ public class Utilisateur extends Personne implements Relation{
                 System.out.println("Ami numéro "+ i +" : " + amis.get(i).getPrenom()+ "  " + amis.get(i).getNom() +"\n"); 
             }
         }
-    }   
+    }
+
+/**
+ * choix du destinataire d'un message
+     * @return le nom du destinataire du message
+ */
+    public String choixDestinataire() {
+        String s = "empty";
+        if(amis.isEmpty()) {
+            System.out.print("Aucun destinataire possible!! \n");
+            s = "empty";
+        }else{
+            afficherPersonnes();
+            System.out.print("Choisissez le numéro du destinataire du message: \n");
+            int i = scan.nextInt();
+            scan.nextLine();
+            s = amis.get(i).getPrenom();
+        }
+        return s;
+    }
+    
+/**
+ * Affiche tous les amis de l'utilisateur
+ */
+    public void rechercherPersonne() {
+        if(amis.isEmpty()) {
+            System.out.println("Vous n'avez aucun ami!!!\n");
+        }else{
+            System.out.println("Vous avez " + amis.size() + " amis.");
+            for(int i = 0; i < amis.size(); i++ ){
+                System.out.println("Ami numéro "+ i +" : " + amis.get(i).getPrenom()+ "  " + amis.get(i).getNom() +"\n"); 
+            }
+        }
+    }
+    
+    /**
+ * Permet à l'utilisateur actuel de supprimer un ami 
+ */  
+    @Override
+    public void supprimerPersonne() {
+        System.out.print("Choisissez le numéro de l'ami à supprimer: \n");
+        int i = scan.nextInt();
+        scan.nextLine();
+        amis.remove(i);
+        
+       // Personne u = ListeUtilisateurs.choisirUtilisateur();
+       // amis.add(u);
+    }
+
 }
 
 

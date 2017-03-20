@@ -125,6 +125,23 @@ public class Directeur extends Employe implements Relation{
             }
         }
     }
+
+/**
+ * Affiche tous les amis de l'utilisateur
+ */
+    @Override
+    public void supprimerPersonne(){
+        if(mesEmployes.isEmpty()) {
+            System.out.println("\nVous n'avez aucun employé!!!\n");
+        }else{
+            System.out.println("\nVous avez " + mesEmployes.size() + " employes.");
+            for(int i = 0; i < mesEmployes.size(); i++ ){
+                System.out.println("\nEmployé numéro "+ i +" au poste de " + mesEmployes.get(i).getPoste()
+                + " : " +mesEmployes.get(i).getPrenom()+ mesEmployes.get(i).getNom()+ "\n"); 
+            }
+        }
+    }    
+    
     
     @Override
     public void recevoirPaiement(){

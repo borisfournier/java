@@ -13,5 +13,6 @@ public interface Relation {
     public void ajouterPersonne();
     public void afficherUnePersonne();
     public void afficherPersonnes();
+    public void supprimerPersonne();
     
 }
