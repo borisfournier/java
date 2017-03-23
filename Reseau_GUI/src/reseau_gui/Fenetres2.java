@@ -5,7 +5,6 @@
  */
 package reseau_gui;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 /**
@@ -21,7 +20,7 @@ public class Fenetres2 extends javax.swing.JFrame {
     public Fenetres2() {
         initComponents();
         this.setTitle("Reseau_social Boris");   //titre de la fenetre
-        this.setSize(400,700);  //taille de la fenetre
+        this.setSize(350,700);  //taille de la fenetre
         this.setLocationRelativeTo(null);//position au centre
         Putilisateur.setVisible(true);
         Pmoderateur.setVisible(false);
@@ -192,46 +191,50 @@ public class Fenetres2 extends javax.swing.JFrame {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
+        Age.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AgeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout UtilisateurLayout = new javax.swing.GroupLayout(Utilisateur);
         Utilisateur.setLayout(UtilisateurLayout);
         UtilisateurLayout.setHorizontalGroup(
             UtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(UtilisateurLayout.createSequentialGroup()
-                .addGroup(UtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(UtilisateurLayout.createSequentialGroup()
-                        .addGap(58, 58, 58)
-                        .addGroup(UtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(UtilisateurLayout.createSequentialGroup()
-                                .addGroup(UtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(8, 8, 8))
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(UtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel1)
-                            .addGroup(UtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(Nom)
-                                .addComponent(Prenom)
-                                .addComponent(Role, 0, 145, Short.MAX_VALUE))
-                            .addComponent(Age, javax.swing.GroupLayout.Alignment.LEADING)))
-                    .addGroup(UtilisateurLayout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(Putilisateur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(UtilisateurLayout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addGroup(UtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Pdirecteur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(UtilisateurLayout.createSequentialGroup()
-                                .addComponent(jButton2)
-                                .addGap(140, 140, 140)
-                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(UtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(UtilisateurLayout.createSequentialGroup()
+                    .addGap(58, 58, 58)
+                    .addGroup(UtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(UtilisateurLayout.createSequentialGroup()
+                            .addGroup(UtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(8, 8, 8))
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addGroup(UtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jLabel1)
+                        .addComponent(Nom, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(Prenom, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(Role, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(Age, javax.swing.GroupLayout.Alignment.LEADING)))
+                .addGroup(UtilisateurLayout.createSequentialGroup()
+                    .addGap(38, 38, 38)
+                    .addComponent(Putilisateur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(UtilisateurLayout.createSequentialGroup()
+                    .addGap(39, 39, 39)
+                    .addGroup(UtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(Pdirecteur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(UtilisateurLayout.createSequentialGroup()
+                            .addComponent(jButton2)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(46, 46, 46)))))
             .addGroup(UtilisateurLayout.createSequentialGroup()
                 .addGap(48, 48, 48)
                 .addComponent(Pmoderateur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         UtilisateurLayout.setVerticalGroup(
             UtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -260,7 +263,7 @@ public class Fenetres2 extends javax.swing.JFrame {
                 .addComponent(Pmoderateur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(Pdirecteur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                 .addGroup(UtilisateurLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
@@ -271,17 +274,11 @@ public class Fenetres2 extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Utilisateur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(24, Short.MAX_VALUE))
+            .addComponent(Utilisateur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Utilisateur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(Utilisateur, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -317,7 +314,7 @@ public class Fenetres2 extends javax.swing.JFrame {
         ArrayList<Personne> Personnes = ListePersonnes.getPersonnes();
         String nom;
         String prenom;
-        int age =0;
+        int age = 0;
         String role;
         role ="Utilisateur";
         int salaire =0;
@@ -336,23 +333,26 @@ public class Fenetres2 extends javax.swing.JFrame {
         if(Role.getSelectedItem()=="Utilisateur"){
             role = Role.getSelectedItem().toString();
             pseudo = Pseudo.getText();
+            System.out.println(role);
             Personne u = new Utilisateur (nom, prenom, age, role, pseudo);
             Personnes.add(u);
             System.out.println(Personnes.size());
-           /*for (Personne p:Personnes){
-                System.out.println(p.nom);
-                System.out.println(p.prenom);
-                System.out.println(p.age);
-                System.out.println(p.role);
-           }*/
+            Age.setText("");
+            Nom.setText("");
+            Prenom.setText("");
+            Pseudo.setText("");
        }else if(Role.getSelectedItem()=="Moderateur"){
             niveau = Niveau.getSelectedItem().toString();
             role = Role.getSelectedItem().toString();
             pseudo = Pseudo.getText();
+            System.out.println(role);
             Personne m = new Moderateur (nom, prenom, age, role, pseudo, niveau);
             Personnes.add(m);
             System.out.println(Personnes.size());
-            System.out.println(niveau);
+            Age.setText("");
+            Nom.setText("");
+            Prenom.setText("");
+            Pseudo.setText("");
        }else{
 
                 try{
@@ -362,12 +362,16 @@ public class Fenetres2 extends javax.swing.JFrame {
                 }
             
             role = Role.getSelectedItem().toString();
+            System.out.println(role);
             Personne d = new Directeur (nom, prenom, age, role,salaire);
             Personnes.add(d);
             System.out.println(Personnes.size());
-
+            Age.setText("");
+            Nom.setText("");
+            Prenom.setText("");
+            Salaire.setText("");
        }
-       
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -376,6 +380,10 @@ public class Fenetres2 extends javax.swing.JFrame {
         Fenetres1 f = new Fenetres1();
         f.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void AgeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AgeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_AgeActionPerformed
 
     /**
      * @param args the command line arguments

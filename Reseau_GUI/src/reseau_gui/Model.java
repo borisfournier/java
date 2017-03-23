@@ -38,19 +38,36 @@ public class Model extends AbstractTableModel{
 
 		case 0:
 			// Nom
-			return ListePersonnes.getPersonnes().get(rowIndex).getNom();
+			if(ListePersonnes.getPersonnes().get(rowIndex).getNom() == null) {
+                            return "";
+                        }else {
+                            return ListePersonnes.getPersonnes().get(rowIndex).getNom();
+                        }
 
 		case 1:
 			// Prenom
-			return ListePersonnes.getPersonnes().get(rowIndex).getPrenom();
+			if (ListePersonnes.getPersonnes().get(rowIndex).getPrenom() == null)
+                        {
+                            return "";
+                        }
+                        else
+                        {
+                            return ListePersonnes.getPersonnes().get(rowIndex).getPrenom();
+                        }
 
 		case 2:
 			// Annee
-			return ListePersonnes.getPersonnes().get(rowIndex).getAge();
+			
+                        return ListePersonnes.getPersonnes().get(rowIndex).getAge();
+                        
 
 		default:
 			// Sexe
-			return ListePersonnes.getPersonnes().get(rowIndex).getRole();
+			if(ListePersonnes.getPersonnes().get(rowIndex).getRole() == null){
+                            return "";
+                        }else{
+                            return ListePersonnes.getPersonnes().get(rowIndex).getRole();
+                        }
 
 		}
 	}

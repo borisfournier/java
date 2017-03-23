@@ -19,7 +19,7 @@ public class Fenetres1 extends javax.swing.JFrame{
     public Fenetres1() {
         initComponents();
         this.setTitle("Reseau_social Boris");   //titre de la fenetre
-        this.setSize(355,290);  //taille de la fenetre
+        this.setSize(440,290);  //taille de la fenetre
         this.setLocationRelativeTo(null);//position au centre
         Menu1.setVisible(true);
         Connexion.setVisible(false);
@@ -132,7 +132,7 @@ public class Fenetres1 extends javax.swing.JFrame{
                             .addComponent(check1)
                             .addComponent(check3)
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 59, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         Menu1Layout.setVerticalGroup(
             Menu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -156,13 +156,11 @@ public class Fenetres1 extends javax.swing.JFrame{
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Menu1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(Menu1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(Menu1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(Menu1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -180,7 +178,7 @@ public class Fenetres1 extends javax.swing.JFrame{
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 20, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,21 +286,21 @@ public class Fenetres1 extends javax.swing.JFrame{
             .addGroup(ConfirmationLayout.createSequentialGroup()
                 .addGroup(ConfirmationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(ConfirmationLayout.createSequentialGroup()
-                        .addGap(60, 60, 60)
+                        .addGap(87, 87, 87)
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(ConfirmationLayout.createSequentialGroup()
-                        .addGap(145, 145, 145)
+                        .addGap(163, 163, 163)
                         .addComponent(jButton4)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(104, Short.MAX_VALUE))
         );
         ConfirmationLayout.setVerticalGroup(
             ConfirmationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ConfirmationLayout.createSequentialGroup()
-                .addGap(111, 111, 111)
+                .addGap(96, 96, 96)
                 .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
                 .addComponent(jButton4)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addGap(39, 39, 39))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -344,7 +342,7 @@ public class Fenetres1 extends javax.swing.JFrame{
         // TODO add your handling code here:
         
         Connexion.setVisible(false);
-        this.setSize(400,400);
+        this.setSize(440,290);
         this.setLocationRelativeTo(null);//position au centre
         Confirmation.setVisible(true);
 
@@ -359,9 +357,9 @@ public class Fenetres1 extends javax.swing.JFrame{
         // TODO add your handling code here:
         Fenetres2 f2 = new Fenetres2();
         Fenetres3 f3 = new Fenetres3();
-        if(check1.isSelected()){
+        if(check1.isSelected() && !ListePersonnes.getPersonnes().isEmpty()){
             Menu1.setVisible(false);
-            this.setSize(380,350);
+            this.setSize(440,290);
             Connexion.setVisible(true);
         }else if(check2.isSelected()){
             f2.setVisible(true);
@@ -369,7 +367,8 @@ public class Fenetres1 extends javax.swing.JFrame{
         }else if(check3.isSelected()){
             f2.setVisible(false);
             f3.setVisible(true);
-        }else{
+            setVisible(false);
+        }else if(check4.isSelected()){
             this.dispose();
             System.exit(0);
         }

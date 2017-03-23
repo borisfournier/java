@@ -25,6 +25,7 @@ public class Utilisateur extends Personne{
         this.prenom = prenom;
         this.age = age;
         this.pseudo = pseudo;
+        this.role = role;
     }
     
 //méthodes

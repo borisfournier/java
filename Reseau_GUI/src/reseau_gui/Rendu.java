@@ -19,15 +19,16 @@ public class Rendu implements TableCellRenderer{
 
     @Override
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-       JLabel lab = new JLabel("ttett");
+            
+       JLabel lab = new JLabel(value.toString());
+       lab.setOpaque(true);
        if (row % 2 == 0)
        {
-           lab.setBackground(Color.ORANGE);
-           
+           lab.setBackground(Color.GRAY); 
        }
        else
        {
-           lab.setBackground(Color.white);
+           lab.setBackground(Color.CYAN);
        }
        return lab;
     }
